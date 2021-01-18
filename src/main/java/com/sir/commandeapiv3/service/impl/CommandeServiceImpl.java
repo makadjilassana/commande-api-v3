@@ -58,8 +58,14 @@ public class CommandeServiceImpl implements CommandeService{
            return -1;
        }
       else {
-      commandeDao.save(commande);
-      return 1;
+           commande.setLivraison(false);
+           commandeDao.save(commande);
+
+           commande.setResteApayer(commande.getTotal()-commande.getTotalPaiement());
+           String resteApayer= String.format("%.2f", commande.getResteApayer());
+           commande.setResteApayer(Double.valueOf(resteApayer));
+           commandeDao.save(commande);
+           return 1;
       }
  }
     
@@ -84,6 +90,18 @@ public class CommandeServiceImpl implements CommandeService{
   }
 
     @Override
+    public int livrer(String reference) {
+        Commande commande = findByReference(reference);
+        if(commande==null){
+            return -1;
+        }else{
+            commande.setLivraison(true);
+            commandeDao.save(commande);
+            return 1;
+        }
+    }
+
+    @Override
     public int payer(String reference, double montant) {
        Commande commande = findByReference(reference);
        if(commande==null){
@@ -95,6 +113,7 @@ public class CommandeServiceImpl implements CommandeService{
        else{
            double nvPaiement = commande.getTotalPaiement()+montant;
            commande.setTotalPaiement(nvPaiement);
+           commande.setResteApayer(commande.getResteApayer()-montant);
            commandeDao.save(commande);
  
            return 1;

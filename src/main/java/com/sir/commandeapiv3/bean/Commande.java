@@ -29,6 +29,8 @@ public class Commande implements Serializable {
     private String reference; 
     private double totalPaiement;
     private double total;
+    private double resteApayer;
+    private boolean livraison;
    
      @OneToMany(mappedBy = "commande")
     private List<CommandeItem> commandeItems;
@@ -76,7 +78,22 @@ public class Commande implements Serializable {
     public void setCommandeItems(List<CommandeItem> commandeItems) {
         this.commandeItems = commandeItems;
     }
-    
+
+    public boolean isLivraison() {
+        return livraison;
+    }
+
+    public void setLivraison(boolean livraison) {
+        this.livraison = livraison;
+    }
+
+    public double getResteApayer() {
+        return resteApayer;
+    }
+
+    public void setResteApayer(double resteApayer) {
+        this.resteApayer= resteApayer;
+    }
 
     @Override
     public int hashCode() {

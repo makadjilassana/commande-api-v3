@@ -19,6 +19,7 @@ public interface CommandeService {
     public int payer(String reference,double montant);
     public int creer(Commande commande);
     public int delete(String reference);
+    public int livrer(String refernce);
     public Commande saveCommandeWithCommandeItems(Commande commande);
     public int deleteCommandeWithCommandeItems(String reference);
     public List<Commande> afficherCommandes();

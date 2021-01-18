@@ -62,5 +62,10 @@ public class CommandeRest {
         return commandeService.payer(reference, montant);
     }
 
+    @PutMapping("/livraison/reference/{reference}")
+    public int livrer(@PathVariable("reference") String reference) {
+         return commandeService.livrer(reference);
+    }
+
     
 }
